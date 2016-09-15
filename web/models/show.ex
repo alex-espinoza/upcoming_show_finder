@@ -6,7 +6,7 @@ defmodule UpcomingShowFinder.Show do
     field :openers, :string
     field :price, :string, null: false
     field :date, :string, null: false
-    belongs_to :source, UpcomingShowFinder.Source, null: false
+    belongs_to :source, UpcomingShowFinder.Source
 
     timestamps()
   end
