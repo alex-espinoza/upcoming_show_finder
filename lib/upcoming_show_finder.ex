@@ -14,6 +14,7 @@ defmodule UpcomingShowFinder do
       supervisor(UpcomingShowFinder.Endpoint, []),
       # Start your own worker by calling: UpcomingShowFinder.Worker.start_link(arg1, arg2, arg3)
       # worker(UpcomingShowFinder.Worker, [arg1, arg2, arg3]),
+      worker(UpcomingShowFinder.Finder, []),
     ]
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html
