@@ -9,3 +9,8 @@
 #
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
+
+alias UpcomingShowFinder.Repo
+alias UpcomingShowFinder.Source
+
+Repo.insert!(%Source{venue_name: "Royale", location: "Boston, MA", parser: "Royale", url: "http://royaleboston.com/events/category/concerts/photo/"})
