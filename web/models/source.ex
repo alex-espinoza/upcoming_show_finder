@@ -7,6 +7,7 @@ defmodule UpcomingShowFinder.Source do
     field :parser, :string, null: false
     field :url, :string, null: false
     field :enabled, :integer, default: 1
+    has_many :shows, UpcomingShowFinder.Show
 
     timestamps()
   end
