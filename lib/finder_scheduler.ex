@@ -1,5 +1,6 @@
-defmodule UpcomingShowFinder.Finder do
+defmodule UpcomingShowFinder.FinderScheduler do
   use GenServer
+  alias UpcomingShowFinder.Finder
 
   def start_link, do: GenServer.start_link(__MODULE__, %{})
 
@@ -9,7 +10,7 @@ defmodule UpcomingShowFinder.Finder do
   end
 
   def handle_info(:find, state) do
-    IO.puts(":find was started")
+    Finder.prepare_for_scraping
     schedule_find
     {:noreply, state}
   end
