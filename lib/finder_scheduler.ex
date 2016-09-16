@@ -10,10 +10,10 @@ defmodule UpcomingShowFinder.FinderScheduler do
   end
 
   def handle_info(:find, state) do
-    Finder.prepare_for_scraping
+    Finder.prepare_to_scrape
     schedule_find
     {:noreply, state}
   end
 
-  defp schedule_find, do: Process.send_after(self(), :find, 5 * 1000)
+  defp schedule_find, do: Process.send_after(self(), :find, 2 * 1000)
 end
