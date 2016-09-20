@@ -19,7 +19,7 @@ defmodule UpcomingShowFinder.Mixfile do
   def application do
     [mod: {UpcomingShowFinder, []},
      applications: [:phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger, :gettext,
-                    :phoenix_ecto, :postgrex, :httpoison, :floki]]
+                    :phoenix_ecto, :postgrex, :httpoison, :floki, :timex]]
   end
 
   # Specifies which paths to compile per environment.
@@ -41,6 +41,7 @@ defmodule UpcomingShowFinder.Mixfile do
       {:cowboy, "~> 1.0"},
       {:httpoison, "~> 0.9.0"},
       {:floki, "~> 0.10.1"},
+      {:timex, "~> 3.0"},
     ]
   end
 
