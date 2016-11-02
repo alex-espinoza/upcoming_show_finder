@@ -10,6 +10,7 @@ defmodule UpcomingShowFinder.Finder do
     Logger.info("Finder is preparing to scrape for new shows")
     sources = Repo.all(Source)
     Enum.each(sources, &scrape(&1))
+    Logger.info("Scraping complete")
   end
 
   defp scrape(source) do

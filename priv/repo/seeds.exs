@@ -13,4 +13,5 @@
 alias UpcomingShowFinder.Repo
 alias UpcomingShowFinder.Source
 
-Repo.insert!(%Source{venue_name: "Royale", location: "Boston, MA", parser: "Royale", url: "http://royaleboston.com/events/category/concerts/photo/"})
+#Repo.insert!(%Source{venue_name: "Royale", location: "Boston, MA", parser: "Royale", url: "http://royaleboston.com/events/category/concerts/photo/"})
+Repo.insert!(%Source{venue_name: "Royale", location: "Boston, MA", parser: "Royale", url: "http://www.boweryboston.com/royale/"})

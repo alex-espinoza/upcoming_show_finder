@@ -1,13 +1,13 @@
 defmodule UpcomingShowFinder.RoyaleParser do
-  def block_element_selector, do: "#tribe-events-content .tribe-events-loop .type-tribe_events"
+  def block_element_selector, do: "#content .list-view .list-view-item"
 
-  def headliner_selector, do: ".tribe-events-event-details .tribe-events-list-event-title a"
+  def headliner_selector, do: ".list-view-details .headliners a"
 
-  def openers_selector, do: ".tribe-events-event-details .tribe-events-meta-group .tribe-meta-value"
+  def openers_selector, do: ".list-view-details .supports a"
 
-  def price_selector, do: ".tribe-events-event-details .tribe-events-meta-group .tribe-meta-value"
+  def price_selector, do: ".ticket-price .price-range"
 
-  def date_selector, do: ".tribe-events-event-details .tribe-events-event-meta .tribe-event-date-start"
+  def date_selector, do: ".list-view-details .dates"
 
   def parse_headliner_elements(headliner_elements) do
     headliner_elements
@@ -16,51 +16,50 @@ defmodule UpcomingShowFinder.RoyaleParser do
   end
 
   def parse_openers_elements(openers_elements) do
-    first_element_text  = List.first(openers_elements)
-                          |> Floki.text
-                          |> String.trim
-
-    is_dollar_amount = Regex.match?(~r/\$\d/, first_element_text)
-
-    get_openers(first_element_text, is_dollar_amount)
-  end
-
-  defp get_openers(_, true) do
-    nil
-  end
-
-  defp get_openers(first_element_text, false) do
-    first_element_text
+    openers_elements
+    |> Floki.text
+    |> String.trim
   end
 
   def parse_price_elements(price_elements) do
-    Enum.map(price_elements, &check_price_element(&1))
-    |> Enum.reject(&(nil == &1))
-    |> List.last
-  end
-
-  defp check_price_element(element) do
-    element_text = Floki.text(element) |> String.trim
-    is_dollar_amount = Regex.match?(~r/\$\d/, element_text)
-
-    get_price(element_text, is_dollar_amount)
-  end
-
-  defp get_price(_, false) do
-    nil
-  end
-
-  defp get_price(element_text, true) do
-    element_text
+    price_elements
+    |> Floki.text
+    |> String.trim
   end
 
   def parse_date_elements(date_elements) do
-    datetime = date_elements
-               |> Floki.text
-               |> String.trim
-               # |> String.trim <> " 2016"
-               # |> Timex.parse!("%A, %B %e @ %k:%M %P %Y", :strftime)
-               # |> Timex.format!("%FT%TZ", :strftime)
-               # |> Ecto.DateTime.cast!
+    date_string = date_elements
+    |> Floki.text
+    |> String.trim
+
+    year = determine_if_show_is_next_year(date_string)
+
+    date_string
+    |> Kernel.<>(year)
+    |> Timex.parse!("%a %_m/%d %Y", :strftime)
+    |> Timex.format!("%FT%TZ", :strftime)
+  end
+
+  def determine_if_show_is_next_year(date_string) do
+    current_time = Ecto.DateTime.utc
+    {_, current_year_and_month} = Timex.format(current_time, "%-m %Y", :strftime)
+    [current_month, current_year] = String.split(current_year_and_month, " ")
+    current_month = String.to_integer(current_month)
+    current_year = String.to_integer(current_year)
+
+    [show_month, _] = String.split(date_string, "/")
+    [_, show_month] = String.split(show_month, " ")
+    show_month = String.to_integer(show_month)
+
+    get_year(show_month, current_month, current_year)
+  end
+
+  def get_year(show_month, current_month, current_year) when show_month < current_month do
+    current_year = current_year + 1
+    " " <> Integer.to_string(current_year)
+  end
+
+  def get_year(show_month, current_month, current_year) when show_month >= current_month do
+    " " <> Integer.to_string(current_year)
   end
 end

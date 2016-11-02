@@ -6,7 +6,7 @@ defmodule UpcomingShowFinder.Repo.Migrations.CreateShow do
       add :headliner, :string
       add :openers, :string
       add :price, :string
-      add :date, :string
+      add :date, :datetime
       add :source_id, references(:sources, on_delete: :nilify_all)
 
       timestamps()

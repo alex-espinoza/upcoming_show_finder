@@ -5,7 +5,7 @@ defmodule UpcomingShowFinder.Show do
     field :headliner, :string, null: false
     field :openers, :string
     field :price, :string
-    field :date, :string, null: false
+    field :date, Ecto.DateTime, null: false
     belongs_to :source, UpcomingShowFinder.Source
 
     timestamps()
