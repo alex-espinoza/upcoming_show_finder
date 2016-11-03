@@ -7,10 +7,10 @@ defmodule UpcomingShowFinder.Finder do
   alias UpcomingShowFinder.Show
 
   def prepare_to_scrape do
-    Logger.info("Finder is preparing to scrape for new shows")
+    Logger.info("Finder is preparing to scrape for new shows.")
     sources = Repo.all(Source)
     Enum.each(sources, &scrape(&1))
-    Logger.info("Scraping complete")
+    Logger.info("Scraping complete.")
   end
 
   defp scrape(source) do
@@ -63,9 +63,13 @@ defmodule UpcomingShowFinder.Finder do
 
   defp save_show(show_data) do
     changeset = Show.changeset(%Show{}, show_data)
-    IO.puts("---")
-    IO.inspect(changeset)
-    Repo.insert!(changeset)
+
+    case Repo.insert(changeset) do
+      {:ok, show} ->
+        Logger.info("New show has been saved.")
+      {:error, changeset} ->
+        Logger.info("Show already exists.")
+    end
   end
 
   defp parse_headliner_elements(headliner_elements, parser_module) do

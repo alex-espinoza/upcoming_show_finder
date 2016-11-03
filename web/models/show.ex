@@ -12,11 +12,12 @@ defmodule UpcomingShowFinder.Show do
   end
 
   @doc """
-  Builds a changeset based on the `struct` and `params`.
+  Builds a changeset based on the `model` and `params`.
   """
-  def changeset(struct, params \\ %{}) do
-    struct
+  def changeset(model, params \\ %{}) do
+    model
     |> cast(params, [:headliner, :openers, :price, :date, :source_id])
     |> validate_required([:headliner, :date, :source_id])
+    |> unique_constraint(:headliner, name: :headliner_date_source_id_index)
   end
 end

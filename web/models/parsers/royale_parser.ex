@@ -44,11 +44,11 @@ defmodule UpcomingShowFinder.RoyaleParser do
     current_time = Ecto.DateTime.utc
     {_, current_year_and_month} = Timex.format(current_time, "%-m %Y", :strftime)
     [current_month, current_year] = String.split(current_year_and_month, " ")
-    current_month = String.to_integer(current_month)
-    current_year = String.to_integer(current_year)
-
     [show_month, _] = String.split(date_string, "/")
     [_, show_month] = String.split(show_month, " ")
+
+    current_month = String.to_integer(current_month)
+    current_year = String.to_integer(current_year)
     show_month = String.to_integer(show_month)
 
     get_year(show_month, current_month, current_year)

@@ -13,5 +13,6 @@ defmodule UpcomingShowFinder.Repo.Migrations.CreateShow do
     end
 
     create index(:shows, [:source_id])
+    create unique_index(:shows, [:headliner, :date, :source_id], name: :headliner_date_source_id_index)
   end
 end
