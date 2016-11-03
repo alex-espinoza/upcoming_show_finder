@@ -45,6 +45,8 @@ defmodule UpcomingShowFinder.Finder do
     openers_selector = apply(parser_module, :openers_selector, [])
     price_selector = apply(parser_module, :price_selector, [])
     date_selector = apply(parser_module, :date_selector, [])
+    information_url_selector = apply(parser_module, :information_url_selector, [])
+    ticket_url_selector = apply(parser_module, :ticket_url_selector, [])
 
     headliner = Floki.find(block_element, headliner_selector)
                 |> parse_headliner_elements(parser_module)
@@ -58,7 +60,13 @@ defmodule UpcomingShowFinder.Finder do
     date = Floki.find(block_element, date_selector)
            |> parse_date_elements(parser_module)
 
-    %{headliner: headliner, openers: openers, price: price, date: date, source_id: source_id}
+    information_url = Floki.find(block_element, information_url_selector)
+           |> parse_information_url_elements(parser_module)
+
+    ticket_url = Floki.find(block_element, ticket_url_selector)
+           |> parse_ticket_url_elements(parser_module)
+
+    %{headliner: headliner, openers: openers, price: price, date: date, information_url: information_url, ticket_url: ticket_url, source_id: source_id}
   end
 
   defp save_show(show_data) do
@@ -86,5 +94,13 @@ defmodule UpcomingShowFinder.Finder do
 
   defp parse_date_elements(date_elements, parser_module) do
     apply(parser_module, :parse_date_elements, [date_elements])
+  end
+
+  defp parse_information_url_elements(information_url_elements, parser_module) do
+    apply(parser_module, :parse_information_url_elements, [information_url_elements])
+  end
+
+  defp parse_ticket_url_elements(ticket_url_elements, parser_module) do
+    apply(parser_module, :parse_ticket_url_elements, [ticket_url_elements])
   end
 end

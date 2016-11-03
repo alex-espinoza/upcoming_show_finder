@@ -1,13 +1,13 @@
 defmodule UpcomingShowFinder.RoyaleParser do
+  @hostname "http://www.boweryboston.com"
+
   def block_element_selector, do: "#content .list-view .list-view-item"
-
   def headliner_selector, do: ".list-view-details .headliners a"
-
   def openers_selector, do: ".list-view-details .supports a"
-
   def price_selector, do: ".ticket-price .price-range"
-
   def date_selector, do: ".list-view-details .dates"
+  def information_url_selector, do: ".list-view-details .headliners a"
+  def ticket_url_selector, do: ".ticket-price h3"
 
   def parse_headliner_elements(headliner_elements) do
     headliner_elements
@@ -38,6 +38,21 @@ defmodule UpcomingShowFinder.RoyaleParser do
     |> Kernel.<>(year)
     |> Timex.parse!("%a %_m/%d %Y", :strftime)
     |> Timex.format!("%FT%TZ", :strftime)
+  end
+
+  def parse_information_url_elements(information_url_elements) do
+    href = information_url_elements
+    |> Floki.attribute("href")
+    |> Enum.at(0)
+
+    @hostname <> href
+  end
+
+  def parse_ticket_url_elements(ticket_url_elements) do
+    parsed_url = ticket_url_elements
+    |> Floki.find("a")
+    |> Floki.attribute("href")
+    |> Enum.at(0)
   end
 
   def determine_if_show_is_next_year(date_string) do
