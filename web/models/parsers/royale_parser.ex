@@ -1,4 +1,4 @@
-defmodule UpcomingShowFinder.RoyaleParser do
+defmodule UpcomingShowFinder.BoweryBostonParser do
   @hostname "http://www.boweryboston.com"
 
   def block_element_selector, do: "#content .list-view .list-view-item"
@@ -31,6 +31,8 @@ defmodule UpcomingShowFinder.RoyaleParser do
     date_string = date_elements
     |> Floki.text
     |> String.trim
+    |> String.split(" - ")
+    |> Enum.at(0)
 
     year = determine_if_show_is_next_year(date_string)
 
@@ -59,8 +61,10 @@ defmodule UpcomingShowFinder.RoyaleParser do
     current_time = Ecto.DateTime.utc
     {_, current_year_and_month} = Timex.format(current_time, "%-m %Y", :strftime)
     [current_month, current_year] = String.split(current_year_and_month, " ")
-    [show_month, _] = String.split(date_string, "/")
-    [_, show_month] = String.split(show_month, " ")
+    show_month = String.split(date_string, "/")
+    |> Enum.at(0)
+    |> String.split(" ")
+    |> Enum.at(1)
 
     current_month = String.to_integer(current_month)
     current_year = String.to_integer(current_year)
