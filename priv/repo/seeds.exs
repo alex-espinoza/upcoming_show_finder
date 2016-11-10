@@ -16,3 +16,4 @@ alias UpcomingShowFinder.Source
 Repo.insert!(%Source{venue_name: "Royale", location: "Boston, MA", parser: "BoweryBoston", url: "http://www.boweryboston.com/royale"})
 Repo.insert!(%Source{venue_name: "The Sinclair", location: "Cambridge, MA", parser: "BoweryBoston", url: "http://www.boweryboston.com/the-sinclair"})
 Repo.insert!(%Source{venue_name: "Great Scott", location: "Allston, MA", parser: "BoweryBoston", url: "http://www.boweryboston.com/great-scott"})
+Repo.insert!(%Source{venue_name: "Middle East Downstairs", location: "Cambridge, MA", parser: "TicketWeb", url: "http://www.ticketweb.com/venue/middle-east-downstairs-cambridge-ma/17343"})
