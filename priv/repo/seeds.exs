@@ -13,7 +13,8 @@
 alias UpcomingShowFinder.Repo
 alias UpcomingShowFinder.Source
 
-Repo.insert!(%Source{venue_name: "Royale", location: "Boston, MA", parser: "BoweryBoston", url: "http://www.boweryboston.com/royale"})
-Repo.insert!(%Source{venue_name: "The Sinclair", location: "Cambridge, MA", parser: "BoweryBoston", url: "http://www.boweryboston.com/the-sinclair"})
-Repo.insert!(%Source{venue_name: "Great Scott", location: "Allston, MA", parser: "BoweryBoston", url: "http://www.boweryboston.com/great-scott"})
-Repo.insert!(%Source{venue_name: "Middle East Downstairs", location: "Cambridge, MA", parser: "TicketWeb", url: "http://www.ticketweb.com/venue/middle-east-downstairs-cambridge-ma/17343"})
+Repo.insert!(%Source{venue_name: "Royale", location: "Boston, MA", parser: "Songkick", url: "https://www.songkick.com/venues/895621-royale/calendar"})
+Repo.insert!(%Source{venue_name: "The Sinclair", location: "Cambridge, MA", parser: "Songkick", url: "https://www.songkick.com/venues/1974904-sinclair/calendar"})
+Repo.insert!(%Source{venue_name: "Great Scott", location: "Allston, MA", parser: "Songkick", url: "https://www.songkick.com/venues/296-great-scott/calendar"})
+Repo.insert!(%Source{venue_name: "The Middle East Downstairs", location: "Cambridge, MA", parser: "Songkick", url: "https://www.songkick.com/venues/7694-middle-east-downstairs/calendar"})
+Repo.insert!(%Source{venue_name: "O'Brien's Pub", location: "Allston, MA", parser: "Songkick", url: "https://www.songkick.com/venues/57468-obriens-pub/calendar"})
